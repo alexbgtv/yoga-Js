@@ -1,5 +1,8 @@
 window.addEventListener('DOMContentLoaded', function(){
 
+
+	// tabs
+
 	let tabs = document.querySelector('.info-header'),
 		tab = document.querySelectorAll('.info-header-tab'),
 		tabContent = document.querySelectorAll('.info-tabcontent')
@@ -31,5 +34,58 @@ window.addEventListener('DOMContentLoaded', function(){
 			}
 		}
 	})
+
+
+	// timer
+	
+	/*
+	Что необходимо: 
+	 1. Дедлайн
+	 2. Сколько времени осталось
+	 3. Статичную верстку превратить в интерактивную
+	 4. функция которая обновляет эти данные на странице
+	 */
+	
+	
+	let deadline = '2020-12-31'
+
+	function getTimeRemaining(endtime) {
+		let t = Date.parse(endtime) - Date.parse(new Date),
+		seconds = Math.floor((t/1000) % 60)
+		minutes = Math.floor((t/1000/60) % 60)
+		hours = Math.floor(t/1000/60/60)
+
+		return {
+			'total'		: t,
+			'hours'		: hours,
+			'minutes'	: minutes,
+			'seconds'	: seconds
+		}
+	}
+
+	getTimeRemaining(deadline)
+
+	function setClock(id, endtime) {
+		let timer = document.getElementById(id),
+		hours = timer.querySelector('.hours'),
+		minutes = timer.querySelector('.minutes'),
+		seconds = timer.querySelector('.seconds'),
+		timeInterval = setInterval(updateClock, 1000)
+
+		function updateClock() {
+			let t = getTimeRemaining(endtime)
+			hours.textContent = t.hours
+			minutes.textContent = t.minutes
+			seconds.textContent = t.seconds
+
+			if (endtime <= 0) {
+				clearInterval(timeInterval)
+			}
+		}
+	}
+
+	setClock('timer', deadline)
+
+
 })
 
