@@ -51,12 +51,14 @@ window.addEventListener('DOMContentLoaded', function(){
 
 	function getTimeRemaining(endtime) {
 		let t = Date.parse(endtime) - Date.parse(new Date),
-		seconds = Math.floor((t/1000) % 60)
-		minutes = Math.floor((t/1000/60) % 60)
-		hours = Math.floor(t/1000/60/60)
+		seconds = Math.floor((t/1000) % 60),
+		minutes = Math.floor((t/1000/60) % 60),
+		hours = Math.floor((t/1000/60/60) % 24),
+		days = Math.floor((t/1000/60/60/24))
 
 		return {
 			'total'		: t,
+			'days'		: days,
 			'hours'		: hours,
 			'minutes'	: minutes,
 			'seconds'	: seconds
@@ -65,8 +67,10 @@ window.addEventListener('DOMContentLoaded', function(){
 
 	getTimeRemaining(deadline)
 
+
 	function setClock(id, endtime) {
 		let timer = document.getElementById(id),
+		days = timer.querySelector('.days'),
 		hours = timer.querySelector('.hours'),
 		minutes = timer.querySelector('.minutes'),
 		seconds = timer.querySelector('.seconds'),
@@ -74,18 +78,53 @@ window.addEventListener('DOMContentLoaded', function(){
 
 		function updateClock() {
 			let t = getTimeRemaining(endtime)
+			days.textContent = t.days
 			hours.textContent = t.hours
 			minutes.textContent = t.minutes
 			seconds.textContent = t.seconds
 
-			if (endtime <= 0) {
+			if(endtime <= 0) {
 				clearInterval(timeInterval)
 			}
 		}
 	}
-
+	
 	setClock('timer', deadline)
 
 
+	// Modal
+
+	let more = document.querySelector('.more'),
+		overlay = document.querySelector('.overlay'),
+		close = document.querySelector('.popup-close'),
+		info = document.querySelector('.info'),
+		descriptionBtn = document.querySelectorAll('.description-btn')
+
+	more.addEventListener('click', function() {
+		overlayShoe()
+	})
+
+	info.addEventListener('click', function(event) {
+		let target = event.target
+		for (let i = 0; i < descriptionBtn.length; i++) {
+			if(target == descriptionBtn[i]){
+				overlayShoe()
+			}
+		}
+	})
+
+	close.addEventListener('click', function() {
+		overlayHide()
+	})
+
+	function overlayShoe() {
+		overlay.style.display = 'block'
+		document.body.style.overflow = 'hidden'
+	}
+
+	function overlayHide() {
+		overlay.style.display = 'none'
+		document.body.style.overflow = ''
+	}
 })
 
