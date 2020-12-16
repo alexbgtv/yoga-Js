@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		}
 	}
 	
-	tabs.addEventListener('click', function(event){
+	tabs.addEventListener('click', (event) => {
 		let target = event.target
 		if (target && target.classList.contains('info-header-tab')) {
 			for (let i = 0; i < tab.length; i++) {
@@ -100,11 +100,11 @@ window.addEventListener('DOMContentLoaded', function(){
 		info = document.querySelector('.info'),
 		descriptionBtn = document.querySelectorAll('.description-btn')
 
-	more.addEventListener('click', function() {
+	more.addEventListener('click', () => {
 		overlayShoe()
 	})
 
-	info.addEventListener('click', function(event) {
+	info.addEventListener('click', (event)=> {
 		let target = event.target
 		for (let i = 0; i < descriptionBtn.length; i++) {
 			if(target == descriptionBtn[i]){
@@ -113,7 +113,7 @@ window.addEventListener('DOMContentLoaded', function(){
 		}
 	})
 
-	close.addEventListener('click', function() {
+	close.addEventListener('click', () => {
 		overlayHide()
 	})
 
